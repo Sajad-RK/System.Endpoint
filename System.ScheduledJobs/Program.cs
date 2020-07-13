@@ -16,13 +16,15 @@ namespace System.ScheduledJobs
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                //.ConfigureWebHostDefaults(webBuilder =>
-                //{
-                //    webBuilder.UseStartup<StartUp>();
-                //})
-                .ConfigureServices((hostContext, services) =>
+                .ConfigureServices(webBuilder =>
                 {
-                    services.AddHostedService<Worker>();
+                    webBuilder.AddHostedService<Jobs.DateTimeReminderJobs>();
+                    webBuilder.AddHostedService<Jobs.ClearFileJob>();
+                    //webBuilder.UseStartup<StartUp>();
                 });
+                //.ConfigureServices((hostContext, services) =>
+                //{
+                //    services.AddHostedService<Worker>();
+                //});
     }
 }

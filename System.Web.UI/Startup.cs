@@ -30,7 +30,7 @@ namespace System.Web.UI
             services.AddScoped<Services.Repositories.IUnitOfWork, Services.Repositories.UnitOfWork>();
             services.AddScoped<Services.Repositories.IFileRepository, Services.Repositories.FileRepository>();
             services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
-            services.AddHostedService<ScheduledJobs.Jobs.DateTimeReminderJobs>();
+            //services.AddHostedService<ScheduledJobs.Jobs.DateTimeReminderJobs>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
