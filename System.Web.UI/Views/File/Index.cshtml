@@ -1,0 +1,38 @@
+﻿@using PagedList.Core.Mvc
+@using System.Web.UI.Pagination
+@model PagedList.Core.PagedList<System.DataAccessLayer.Models.File>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+@*<pager class="pager-container" list="@Model" options="" asp-action="Index" asp-controller="file" asp-route-query="@Model" />*@
+@*<pager class="pager-container" list="@Model" asp-action="Index new {page}" asp-controller="file" />*@
+@*@Html.PagedListPager(Model, page => Url.Action("Index", new { page }));*@
+<table>
+    <tr>
+        <td>Id</td>
+        <td>FileName</td>
+        <td>Extension</td>
+        <td>FileSize</td>
+        <td>CreateDate</td>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Id</td>
+            <td>@item.Title</td>
+            <td>@item.FileExtension</td>
+            <td>@item.FileSize</td>
+            <td>@item.LastModified</td>
+        </tr>
+    }
+</table>
+<br />
+<p><h6>Minimal</h6><pager class="pager-container" list="@Model" options="@PagedListRenderOptions.Bootstrap4Minimal" asp-action="Index" asp-controller="Search" asp-route-query="@Model" /></p>
+<p><h6>Page Numbers with Previous and Next</h6><pager class="pager-container" list="@Model" options="@PagedListRenderOptions.Bootstrap4PageNumbersPlusPrevAndNext" asp-action="Index" asp-controller="file" asp-route-query="@Model" /></p>
+<p><h6>Numbers Only</h6><pager class="pager-container" list="@Model" options="@PagedListRenderOptions.Bootstrap4PageNumbersOnly" asp-action="Index" asp-controller="Search" asp-route-query="@Model" /></p>
+<p><h6>Full</h6><pager class="pager-container" list="@Model" options="@PagedListRenderOptions.Bootstrap4Full" asp-action="Index" asp-controller="Search" asp-route-query="@Model" /></p>
+<p><h6>Customized</h6><pager class="pager-container" list="@Model" options="@SitePagedListRenderOptions.Boostrap4" asp-action="Index" asp-controller="Search" asp-route-query="@Model" /></p>
+

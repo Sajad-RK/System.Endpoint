@@ -1,0 +1,12 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="System.Services.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="IdentityNum" Type="System.String" Scope="User">
+      <Value Profile="(Default)">7yTh1526$</Value>
+    </Setting>
+    <Setting Name="RowId" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">25</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
