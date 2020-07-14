@@ -4,14 +4,16 @@ using System.DataAccessLayer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace System.DataAccessLayer.Migrations
 {
     [DbContext(typeof(Entities))]
-    partial class EntitiesModelSnapshot : ModelSnapshot
+    [Migration("20200714082413_userentity")]
+    partial class userentity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -74,14 +76,16 @@ namespace System.DataAccessLayer.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(60)");
+                        .HasColumnType("nvarchar")
+                        .HasMaxLength(60);
 
                     b.Property<string>("NationId")
                         .HasColumnType("nvarchar(10)")
                         .HasMaxLength(10);
 
                     b.Property<string>("Surname")
-                        .HasColumnType("nvarchar(80)");
+                        .HasColumnType("nvarchar")
+                        .HasMaxLength(80);
 
                     b.Property<string>("UserType")
                         .IsRequired()
@@ -94,13 +98,10 @@ namespace System.DataAccessLayer.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("31845446-a9c9-45fe-b102-bded6b1e0684"),
+                            Id = new Guid("e869f991-63f8-4602-93ad-009abf2d08e3"),
                             CreateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = false,
-                            Name = "Sajad",
-                            NationId = "5560021784",
-                            Surname = "Ramezani",
-                            UserType = "Developer"
+                            UserType = "0"
                         });
                 });
 #pragma warning restore 612, 618

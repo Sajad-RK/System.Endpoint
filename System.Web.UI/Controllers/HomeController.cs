@@ -9,9 +9,11 @@ using System.Web.UI.Models;
 using System.DataAccessLayer.Models;
 using System.Services.Repositories;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Authorization;
 
 namespace System.Web.UI.Controllers
 {
+    //[Authorize]
     public class HomeController : Controller
     {
         //private System.Services.Repositories.IUnitOfWork _unitOfWork;
@@ -26,7 +28,7 @@ namespace System.Web.UI.Controllers
             this.fileRepository = fileRepository;
             _config = configuration;
         }
-
+        //[Authorize]
         public IActionResult Index()
         {
             string str = "342180027762901";

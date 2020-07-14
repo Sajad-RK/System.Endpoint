@@ -2,10 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -26,10 +28,14 @@ namespace System.Web.UI
         {
             services.AddControllersWithViews();
             services.AddDbContext<DataAccessLayer.Entities>();
-            services.AddScoped<Services.Repositories.IBaseRepository<DataAccessLayer.Models.File>, Services.Repositories.FileRepository>();
+            services.AddScoped(typeof(Services.Repositories.IBaseRepository<>), typeof(Services.Repositories.BaseRepository<>));
             services.AddScoped<Services.Repositories.IUnitOfWork, Services.Repositories.UnitOfWork>();
             services.AddScoped<Services.Repositories.IFileRepository, Services.Repositories.FileRepository>();
+            services.AddScoped<Services.Repositories.IUserRepositories, Services.Repositories.UserRepositories>();
             services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+
+
+
             //services.AddHostedService<ScheduledJobs.Jobs.DateTimeReminderJobs>();
         }
 
@@ -48,9 +54,9 @@ namespace System.Web.UI
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            
             app.UseRouting();
-
+            //app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

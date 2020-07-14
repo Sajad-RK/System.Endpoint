@@ -4,20 +4,60 @@ using System.DataAccessLayer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace System.DataAccessLayer.Migrations
 {
     [DbContext(typeof(Entities))]
-    partial class EntitiesModelSnapshot : ModelSnapshot
+    [Migration("20200714081946_userentityadded")]
+    partial class userentityadded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("System.DataAccessLayer.Models.BaseInfoModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreateDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2020, 7, 14, 12, 49, 45, 510, DateTimeKind.Local).AddTicks(4077));
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BaseInfoModel");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("BaseInfoModel");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("2bf5bce6-27a8-4b33-9ba2-7d97245bb4d2"),
+                            CreateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsActive = false
+                        });
+                });
 
             modelBuilder.Entity("System.DataAccessLayer.Models.File", b =>
                 {
@@ -60,48 +100,25 @@ namespace System.DataAccessLayer.Migrations
 
             modelBuilder.Entity("System.DataAccessLayer.Models.User", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
+                    b.HasBaseType("System.DataAccessLayer.Models.BaseInfoModel");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(60)");
+                        .HasColumnType("nvarchar")
+                        .HasMaxLength(60);
 
                     b.Property<string>("NationId")
                         .HasColumnType("nvarchar(10)")
                         .HasMaxLength(10);
 
                     b.Property<string>("Surname")
-                        .HasColumnType("nvarchar(80)");
+                        .HasColumnType("nvarchar")
+                        .HasMaxLength(80);
 
                     b.Property<string>("UserType")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
-
-                    b.ToTable("Users");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("31845446-a9c9-45fe-b102-bded6b1e0684"),
-                            CreateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsActive = false,
-                            Name = "Sajad",
-                            NationId = "5560021784",
-                            Surname = "Ramezani",
-                            UserType = "Developer"
-                        });
+                    b.HasDiscriminator().HasValue("User");
                 });
 #pragma warning restore 612, 618
         }
