@@ -14,7 +14,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 
-namespace System.Endpoint.API
+namespace System.Web.API
 {
     public class Startup
     {
@@ -29,6 +29,11 @@ namespace System.Endpoint.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddDbContext<DataAccessLayer.Entities>();
+            services.AddScoped(typeof(Services.Repositories.IBaseRepository<>), typeof(Services.Repositories.BaseRepository<>));
+            services.AddScoped<Services.Repositories.IUnitOfWork, Services.Repositories.UnitOfWork>();
+            services.AddScoped<Services.Repositories.IFileRepository, Services.Repositories.FileRepository>();
+            services.AddScoped<Services.Repositories.IUserRepositories, Services.Repositories.UserRepositories>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
@@ -38,57 +43,53 @@ namespace System.Endpoint.API
                         ValidateAudience = true,
                         ValidateLifetime = true,
                         ValidateIssuerSigningKey = true,
-                        ValidIssuer = Configuration["Jwt:Issuer"],
-                        ValidAudience = Configuration["Jwt:Issuer"],
+                        //ValidIssuer = Configuration["Jwt:Issuer"],
+                        //ValidAudience = Configuration["Jwt:Issuer"],
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
                     };
                 });
 
-            services.AddMvc();
-            //MvcOptions mvcOptions = new MvcOptions() { EnableEndpointRouting = false };
+
+            //var appSettingsSection = Configuration.GetSection("AppSettings");
+            //services.Configure<KeySettings>(appSettingsSection);
+            //var appSettings = appSettingsSection.Get<KeySettings>();
+            //var key = Encoding.ASCII.GetBytes(appSettings.SecretKey);
+            //services.AddAuthentication(x => {
+            //    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            //    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            //}).AddJwtBearer(x => {
+            //    x.RequireHttpsMetadata = false;
+            //    x.SaveToken = true;
+            //    x.TokenValidationParameters = new TokenValidationParameters
+            //    {
+            //        ValidateIssuerSigningKey = true,
+            //        IssuerSigningKey = new SymmetricSecurityKey(key),
+            //        ValidateIssuer = false,
+            //        ValidateAudience = false
+            //    };
+            //});
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            //if (env.IsDevelopment())
-            //{
-            //    app.UseDeveloperExceptionPage();
-            //}
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
 
             //app.UseHttpsRedirection();
 
             app.UseRouting();
-            app.UseAuthentication();
 
-            //app.UseAuthorization();
+            app.UseAuthentication();
+            app.UseAuthorization();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                //endpoints.MapDefaultControllerRoute();
-                //endpoints.MapControllerRoute(
-                //    name: "areaRoute",
-                //    pattern: "{area:exists}/{controller}/{action}",
-                //    defaults: new { action = "Index" });
-
-                //endpoints.MapControllerRoute(
-                //    name: "default",
-                //    pattern: "{controller}/{action}/{id?}",
-                //    defaults: new { controller = "Login", action = "Index" });
-
-                //endpoints.MapControllerRoute(
-                //    name: "api",
-                //    pattern: "{controller}/{id?}");
             });
-            //app.UseEndpoints(endpoints =>
-            //{
-            //    endpoints.MapControllerRoute(
-            //        name: "default",
-            //        pattern: "{controller=Login}/{action=Index}/{id?}"
-            //    );
-            //});
-
-            //app.UseMvc();
         }
     }
 }
