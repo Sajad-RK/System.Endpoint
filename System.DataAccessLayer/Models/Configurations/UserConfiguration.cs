@@ -14,6 +14,8 @@ namespace System.DataAccessLayer.Models.Configurations
         {
             builder.Property(a => a.Name).HasColumnType("nvarchar(60)");//.HasMaxLength(60);
             builder.Property(a => a.Surname).HasColumnType("nvarchar(80)");//.HasMaxLength(80);
+            builder.Property(a => a.Username).HasColumnType("nvarchar(50)");
+            builder.Property(a => a.Password).HasColumnType("nvarchar(50)");
             builder.Property(a => a.NationId).HasMaxLength(10);
             builder.Property(a => a.UserType).HasConversion(
                 v => v.ToString(),
@@ -25,7 +27,9 @@ namespace System.DataAccessLayer.Models.Configurations
                 Surname = "Ramezani",
                 NationId = "5560021784",
                 UserType = UserType.Developer,
-            });
+                Username = "sajad91",
+                Password = "qt!99!s@j@d"
+            }); ;
         }
     }
 }

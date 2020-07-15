@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.DataAccessLayer.Models;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace System.Web.API.EndpointModels
 {
-    public class LoginRequest
+    public class AuthenticateResponse
     {
-        public string Username { get; set; }
-        public string Password { get; set; }
+        public User User { get; set; }
+        public string Token { get; set; }
     }
 }
