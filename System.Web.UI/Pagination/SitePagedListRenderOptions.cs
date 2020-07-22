@@ -15,7 +15,7 @@ namespace System.Web.UI.Pagination
                 var option = PagedListRenderOptions.Bootstrap4Full;
 
                 option.MaximumPageNumbersToDisplay = 5;
-
+                
                 return option;
             }
         }

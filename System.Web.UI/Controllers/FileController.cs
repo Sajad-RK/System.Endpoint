@@ -24,20 +24,44 @@ namespace System.Web.UI.Controllers
         }
         public IActionResult Index(int page)
         {
-            var files = fileRepository.Find(page, int.Parse(_config.GetSection("PaginatedCount").Value));
-            
-            //PagedList.Core.PagedList<Models.ViewModels.vw_File> vw_Files = files.ToList().ConvertAll(mapping.MapToFileViewModel);
-            //PagedList.Core.PagedList<Models.ViewModels.vw_File> vw_Files = mapping.MapToFileViewModel(files.ToList());//.ConvertAll();
+            var files = fileRepository.Find((page == 0 ? 1 : page), int.Parse(_config.GetSection("PaginatedCount").Value));
             return View(files);
         }
 
-        //[HttpPost]
-        //public IActionResult Index(int page)
-        //{
-        //    var files = fileRepository.Find(page, int.Parse(_config.GetSection("PaginatedCount").Value));
-        //    //PagedList.Core.PagedList<Models.ViewModels.vw_File> vw_Files = files.ToList().ConvertAll(mapping.MapToFileViewModel);
-        //    //PagedList.Core.PagedList<Models.ViewModels.vw_File> vw_Files = mapping.MapToFileViewModel(files.ToList());//.ConvertAll();
-        //    return View(files);
-        //}
+        public IActionResult AddNewItem()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult AddNewItem(DataAccessLayer.Models.File file)
+        {
+            if (ModelState.IsValid)
+            {
+                fileRepository.Add(file);
+                fileRepository.Save();
+                return RedirectToAction("Index");
+            }
+            else
+                return View();
+        }
+
+        public IActionResult UpdateItem(int id)
+        {
+            var file = fileRepository.Find(a => a.Id == id);
+            if (file != null)
+                return View();
+            else
+                return NotFound();
+        }
+
+        [HttpPost]
+        public IActionResult UpdateItem(DataAccessLayer.Models.File file)
+        {
+            fileRepository.Update(file);
+            fileRepository.Save();
+            return RedirectToAction("Index");
+        }
+
     }
 }

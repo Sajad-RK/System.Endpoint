@@ -1,0 +1,39 @@
+﻿@model System.DataAccessLayer.Models.File
+@{
+    ViewData["Title"] = "AddNewItem";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>File Information</h2>
+
+<div class="container">
+    <form class="m-1 p-1" asp-action="AddNewItem" asp-controller="file" method="post">
+        <div class="form-group">
+            <label asp-for="Title"></label>
+            <input asp-for="Title" class="form-control" />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="FileSize"></label>
+            <input asp-for="FileSize" type="text" class="form-control" />
+            <span asp-validation-for="FileSize" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="FileExtension"></label>
+            <input asp-for="FileExtension" type="text" class="form-control" />
+            <span asp-validation-for="FileExtension" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <br />
+    <div class="">
+        <a asp-controller="File" asp-action="Index" class="btn-link">Back</a>
+    </div>
+</div>
+
+
+<script src="/lib/jquery/dist/jquery.js"></script>
+<script src="/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
+
+

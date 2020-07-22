@@ -14,6 +14,7 @@ namespace System.Services.Repositories
         IEnumerable<T> GetAll();
         IEnumerable<T> Find(Expression<Func<T, bool>> predicate);
         void Update(T obj);
+        void Save();
     }
     public class BaseRepository<T> : IBaseRepository<T> where T : class
     {
@@ -26,6 +27,7 @@ namespace System.Services.Repositories
         public void Add(T obj)
         {
             unitOfWork.Context.Set<T>().Add(obj);
+            //unitOfWork.Commit();
         }
 
         public IEnumerable<T> Find(Expression<Func<T, bool>> predicate)
@@ -40,8 +42,15 @@ namespace System.Services.Repositories
 
         public void Update(T obj)
         {
-            unitOfWork.Context.Entry(obj).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
             unitOfWork.Context.Set<T>().Attach(obj);
+            unitOfWork.Context.Entry(obj).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            //unitOfWork.Commit();
+            //Save();
+        }
+
+        public void Save()
+        {
+            unitOfWork.Commit();
         }
     }
 }

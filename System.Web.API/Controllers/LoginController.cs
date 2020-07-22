@@ -60,24 +60,6 @@ namespace System.Web.API.Controllers
             return Ok(users);
         }
         
-        
-        
-        //private string GenerateJWT(LoginRequest login)
-        //{
-        //    //var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]));
-        //    //var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-        //    //var token = new JwtSecurityToken(configuration["Jwt:Issuer"], configuration["Jwt:Issuer"], null,
-        //    //    expires: DateTime.Now.AddMinutes(120), signingCredentials: credentials);
-
-
-        //    var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]));
-        //    var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-        //    var token = new JwtSecurityToken(login.Id, login.NationId, null,
-        //        expires: DateTime.Now.AddMinutes(120), signingCredentials: credentials);
-        //    return new JwtSecurityTokenHandler().WriteToken(token);
-
-        //}
-
         private AuthenticateResponse AuthenticateUser(LoginRequest login)
         {
             User user = userRepositories.Find(a => a.Username == login.Username && a.Password == login.Password)?.FirstOrDefault();

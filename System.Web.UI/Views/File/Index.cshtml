@@ -1,38 +1,58 @@
 ﻿@using PagedList.Core.Mvc
 @using System.Web.UI.Pagination
 @model PagedList.Core.PagedList<System.DataAccessLayer.Models.File>
-@{
+@{ 
     ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
+    Layout = "~/Views/Shared/_Layout.cshtml"; 
+ }
 
-<h1>Index</h1>
+<h1>Files</h1>
 @*<pager class="pager-container" list="@Model" options="" asp-action="Index" asp-controller="file" asp-route-query="@Model" />*@
 @*<pager class="pager-container" list="@Model" asp-action="Index new {page}" asp-controller="file" />*@
 @*@Html.PagedListPager(Model, page => Url.Action("Index", new { page }));*@
-<table>
-    <tr>
-        <td>Id</td>
-        <td>FileName</td>
-        <td>Extension</td>
-        <td>FileSize</td>
-        <td>CreateDate</td>
-    </tr>
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>@item.Id</td>
-            <td>@item.Title</td>
-            <td>@item.FileExtension</td>
-            <td>@item.FileSize</td>
-            <td>@item.LastModified</td>
-        </tr>
-    }
-</table>
+<div class="content">
+    <form asp-action="AddNewItem" asp-controller="File" method="post">
+        <div style="height:400px;">
+            <table class="table table-bordered table-sm table-striped table-hover border-bottom">
+                <thead>
+                    <tr>
+                        <th class="d-none d-lg-table-cell">Id</th>
+                        <th>File Name</th>
+                        <th>Extension</th>
+                        <th>File Size</th>
+                        <th>Create Date</th>
+                        <th>Edit</th>
+                    </tr>
+                </thead>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="d-none d-lg-table-cell">@item.Id</td>
+                        <td>@item.Title</td>
+                        <td>@item.FileExtension</td>
+                        <td>@item.FileSize</td>
+                        <td>@item.LastModified</td>
+                        <td><a asp-controller="File" asp-action="UpdateItem" asp-route-id="@item.Id" class="btn-link" >Edit</a></td>
+                    </tr>
+                }
+            </table>
+        </div>
+        <div class="">
+            <a asp-controller="File" asp-action="AddNewItem" class="btn-link">New File</a> |
+            <a asp-controller="Home" asp-action="Index" class="btn-link">Back</a>
+        </div>
+        <div class="float-wr" style="margin-top:20%;">
+            @*<pager class="pager-container" list="@Model" options="@PagedListRenderOptions.Bootstrap4PageNumbersPlusPrevAndNext" asp-action="Index" asp-controller="file" asp-route-query="@Model" />*@
+            <pager class="pager-container" list="@Model" options="@PagedListRenderOptions.Bootstrap4Full" asp-action="Index" asp-controller="file" asp-route-query="@Model" />
+        </div>
+    </form>
+    
+</div>
+
 <br />
-<p><h6>Minimal</h6><pager class="pager-container" list="@Model" options="@PagedListRenderOptions.Bootstrap4Minimal" asp-action="Index" asp-controller="Search" asp-route-query="@Model" /></p>
-<p><h6>Page Numbers with Previous and Next</h6><pager class="pager-container" list="@Model" options="@PagedListRenderOptions.Bootstrap4PageNumbersPlusPrevAndNext" asp-action="Index" asp-controller="file" asp-route-query="@Model" /></p>
-<p><h6>Numbers Only</h6><pager class="pager-container" list="@Model" options="@PagedListRenderOptions.Bootstrap4PageNumbersOnly" asp-action="Index" asp-controller="Search" asp-route-query="@Model" /></p>
-<p><h6>Full</h6><pager class="pager-container" list="@Model" options="@PagedListRenderOptions.Bootstrap4Full" asp-action="Index" asp-controller="Search" asp-route-query="@Model" /></p>
-<p><h6>Customized</h6><pager class="pager-container" list="@Model" options="@SitePagedListRenderOptions.Boostrap4" asp-action="Index" asp-controller="Search" asp-route-query="@Model" /></p>
+@*<p><h6>Minimal</h6><pager class="pager-container" list="@Model" options="@PagedListRenderOptions.Bootstrap4Minimal" asp-action="Index" asp-controller="Search" asp-route-query="@Model" /></p>*@
+@*<p><h6>Page Numbers with Previous and Next</h6><pager class="pager-container" list="@Model" options="@PagedListRenderOptions.Bootstrap4PageNumbersPlusPrevAndNext" asp-action="Index" asp-controller="file" asp-route-query="@Model" /></p>*@
+@*<p><h6>Numbers Only</h6><pager class="pager-container" list="@Model" options="@PagedListRenderOptions.Bootstrap4PageNumbersOnly" asp-action="Index" asp-controller="Search" asp-route-query="@Model" /></p>*@
+@*<p><h6>Full</h6><pager class="pager-container" list="@Model" options="@PagedListRenderOptions.Bootstrap4Full" asp-action="Index" asp-controller="Search" asp-route-query="@Model" /></p>*@
+@*<p><h6>Customized</h6><pager class="pager-container" list="@Model" options="@SitePagedListRenderOptions.Boostrap4" asp-action="Index" asp-controller="Search" asp-route-query="@Model" /></p>*@
 
