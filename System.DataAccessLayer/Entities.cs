@@ -14,14 +14,15 @@ namespace System.DataAccessLayer
         {
             #region Configurations
             builder.ApplyConfiguration(new Models.Configurations.FileConfigurations());
+            builder.ApplyConfiguration(new Models.Configurations.ClientConfiguration());
             builder.ApplyConfiguration(new Models.Configurations.UserConfiguration());
-            //builder.ApplyConfiguration(new Models.Configurations.BaseInfoConfiguration());
-
+            
             #endregion
 
         }
         public DbSet<Models.File> Files { get; set; }
         public DbSet<Models.User> Users { get; set; }
+        public DbSet<Models.Client> Clients { get; set; }
     }
 
 }

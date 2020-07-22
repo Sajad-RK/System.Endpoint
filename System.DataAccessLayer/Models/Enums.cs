@@ -13,5 +13,11 @@ namespace System.DataAccessLayer.Models
             Admin = 3,
             Operator = 4,
         }
+        public enum ServiceType
+        {
+            Flight = 1,
+            Hotel = 2,
+            Bus = 3
+        }
     }
 }

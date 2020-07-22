@@ -20,16 +20,37 @@ namespace System.DataAccessLayer.Models.Configurations
             builder.Property(a => a.UserType).HasConversion(
                 v => v.ToString(),
                 v => (UserType)Enum.Parse(typeof(UserType), v));
-            builder.HasData(new User()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Sajad",
-                Surname = "Ramezani",
-                NationId = "5560021784",
-                UserType = UserType.Developer,
-                Username = "sajad91",
-                Password = "qt!99!s@j@d"
-            }); ;
+            //var client = new Client()
+            //{
+            //    Id = Guid.NewGuid(),
+            //    Email = "s.ramezani@enb.ir",
+            //    Mobile = "+989125449379",
+            //    Phone = "+982156379337",
+            //    Name = "Eagel Agency",
+            //    Wallet_NO = "5859831036498060"
+            //};
+            //builder.HasData(new User()
+            //{
+            //    //Client = client,
+            //    Id = Guid.NewGuid(),
+            //    Name = "Sajad",
+            //    Surname = "Ramezani",
+            //    NationId = "5560021784",
+            //    UserType = UserType.Developer,
+            //    Username = "sajad91",
+            //    Password = "qt!99!s@j@d",
+            //    ClientId = client.Id
+            //});
+            //builder.HasData(new User()
+            //{
+            //    Id = Guid.NewGuid(),
+            //    Name = "Sajad",
+            //    Surname = "Ramezani",
+            //    NationId = "5560021784",
+            //    UserType = UserType.Developer,
+            //    Username = "sajad91",
+            //    Password = "qt!99!s@j@d"
+            //});
         }
     }
 }
