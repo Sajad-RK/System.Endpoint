@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -13,6 +15,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 
 namespace System.Web.API
 {
@@ -28,6 +31,28 @@ namespace System.Web.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSwaggerGen(a =>
+            {
+                a.EnableAnnotations();
+                a.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "My Workplace APIs",
+                    Version = "v1",
+                    Description = "It must be a GDS System but used to be my test actions.",
+                    TermsOfService = new Uri("https://api.eniacgds.com/"),
+                    Contact = new OpenApiContact()
+                    {
+                        Name = "Sajad Ramezani", Email = "s.ramezani@enb.ir", Url = new Uri("https://linkedin.com")
+                    },
+                    License = new OpenApiLicense()
+                    {
+                        Name = "GDS Api LICX"
+                    }
+                });
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                a.IncludeXmlComments(xmlPath);
+            });
             services.AddControllers();
             services.AddDbContext<DataAccessLayer.Entities>();
             services.AddScoped(typeof(Services.Repositories.IBaseRepository<>), typeof(Services.Repositories.BaseRepository<>));
@@ -72,6 +97,12 @@ namespace System.Web.API
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+            });
+
+            app.UseSwagger();
+            app.UseSwaggerUI(a =>
+            {
+                a.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
         }
     }

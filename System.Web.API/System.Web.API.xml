@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>System.Web.API</name>
+    </assembly>
+    <members>
+        <member name="M:System.Web.API.Controllers.LoginController.Login(System.Web.API.EndpointModels.LoginRequest)">
+            <summary>
+            Login to system and use token
+            </summary>
+            <param name="login"> credentials informantion</param>
+            <returns>a token which must use in other methods</returns>
+            GET: api/Login
+        </member>
+        <member name="M:System.Web.API.Controllers.LoginController.Get">
+            <summary>
+            List of all system users
+            </summary>
+            <returns>return a list of system users</returns>
+            GET: api/Login/Get
+        </member>
+    </members>
+</doc>

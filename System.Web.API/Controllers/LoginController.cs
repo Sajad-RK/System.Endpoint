@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace System.Web.API.Controllers
 {
@@ -35,9 +36,22 @@ namespace System.Web.API.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Login to system and use token
+        /// </summary>
+        /// <param name="login"> credentials informantion</param>
+        /// <returns>a token which must use in other methods</returns>
+        /// GET: api/Login
         [AllowAnonymous]
         [HttpPost/*("Login")*/]
-        public IActionResult Login([FromBody] LoginRequest login)
+        [SwaggerOperation(
+            Summary = "Login to system and use token",
+            Description = "We must provide credentials for you.",
+            //OperationId = "LoginSystem",
+            Tags = new[] { "Security" })]
+        [SwaggerResponse(200, "Success")]
+        [SwaggerResponse(400, "Failed")]
+        public IActionResult Login([FromBody, SwaggerRequestBody("body params", Required = true)] LoginRequest login)
         {
             IActionResult response = Unauthorized();
             var auth_user = AuthenticateUser(login);
@@ -50,6 +64,11 @@ namespace System.Web.API.Controllers
             return BadRequest(new { Message = "Username or password is incorrect." });
         }
 
+        /// <summary>
+        /// List of all system users
+        /// </summary>
+        /// <returns>return a list of system users</returns>
+        /// GET: api/Login/Get
         //[Authorize]
         [HttpGet("Get")]
         public IActionResult Get()
